@@ -1,0 +1,33 @@
+{
+  "name": "WhatsApp",
+  "short_name": "WhatsApp",
+  "description": "Fast, simple, secure messaging and calls.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#121b22",
+  "theme_color": "#008069",
+  "categories": ["social", "communication", "chat"],
+  "icons": [
+    {
+      "src": "/static/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "New Chat",
+      "url": "/?action=new_chat",
+      "icons": [{ "src": "/static/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

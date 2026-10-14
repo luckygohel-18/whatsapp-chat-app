@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="waGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#25D366"/>
+      <stop offset="100%" stop-color="#128C7E"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <circle cx="256" cy="256" r="236" fill="url(#waGrad)" filter="url(#shadow)"/>
+  <path d="M140 372 L160 300 C144 274 136 244 136 214 C136 148 190 94 256 94 C322 94 376 148 376 214 C376 280 322 334 256 334 C228 334 200 324 178 308 Z" fill="none" stroke="#FFFFFF" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M210 175 C206 166 200 166 195 166 C190 166 185 166 180 171 C175 176 162 189 162 214 C162 239 180 263 183 266 C186 269 217 320 268 340 C311 356 319 346 329 345 C338 344 358 333 362 322 C366 311 366 301 364 299 C362 297 358 295 351 292 C344 288 312 272 306 270 C300 268 296 267 292 273 C288 279 276 293 273 297 C270 301 266 301 259 298 C252 294 231 287 206 264 C187 247 174 226 170 219 C166 212 170 208 173 205 C176 202 180 197 184 193 C187 189 189 186 191 181 C194 177 192 173 190 170 Z" fill="#FFFFFF"/>
+</svg>

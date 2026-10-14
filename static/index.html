@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>WhatsApp</title>
+  
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#075e54">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="WhatsApp">
+  <link rel="manifest" href="/static/manifest.json">
+  <link rel="icon" type="image/svg+xml" href="/static/icons/favicon.svg">
+  <link rel="apple-touch-icon" href="/static/icons/icon-192.png">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body data-theme="dark">
+
+  <div class="app-container" id="appContainer">
+    
+    <!-- SIDEBAR / CHATS LIST -->
+    <div class="sidebar" id="sidebar">
+      
+      <!-- Top App Header -->
+      <header class="app-header">
+        <div class="brand-container">
+          <svg viewBox="0 0 512 512">
+            <path fill="#25D366" d="M256 0C114.6 0 0 114.6 0 256c0 45.4 11.8 89.6 34.3 128.8L3.2 501.1c-2.4 8.7 5.7 16.8 14.4 14.4l117.8-31.5C173.8 503.7 214.3 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0z"/>
+            <path fill="#FFFFFF" d="M140 372 L160 300 C144 274 136 244 136 214 C136 148 190 94 256 94 C322 94 376 148 376 214 C376 280 322 334 256 334 C228 334 200 324 178 308 Z" fill="none" stroke="#FFFFFF" stroke-width="20"/>
+            <path fill="#FFFFFF" d="M210 175 C206 166 200 166 195 166 C190 166 185 166 180 171 C175 176 162 189 162 214 C162 239 180 263 183 266 C186 269 217 320 268 340 C311 356 319 346 329 345 C338 344 358 333 362 322 C366 311 366 301 364 299 C362 297 358 295 351 292 C344 288 312 272 306 270 C300 268 296 267 292 273 C288 279 276 293 273 297 C270 301 266 301 259 298 C252 294 231 287 206 264 C187 247 174 226 170 219 C166 212 170 208 173 205 C176 202 180 197 184 193 C187 189 189 186 191 181 C194 177 192 173 190 170 Z"/>
+          </svg>
+          <span class="brand-title">WhatsApp</span>
+        </div>
+        
+        <div class="header-icons">
+          <!-- Connect Phone / QR Code button -->
+          <button class="icon-btn" id="qrModalBtn" title="Connect Phone / QR Code">
+            <svg viewBox="0 0 24 24"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zm-5 0h3v2h-3v-2zm2 2h3v3h-3v-3zm3 3h3v3h-3v-3zm-5 0h2v3h-2v-3zm5-5h2v2h-2v-2z"/></svg>
+          </button>
+          
+          <!-- Theme toggle button -->
+          <button class="icon-btn" id="themeToggleBtn" title="Toggle Theme">
+            <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
+          </button>
+          
+          <!-- More options -->
+          <button class="icon-btn" id="menuBtn" title="Menu">
+            <svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+          </button>
+        </div>
+      </header>
+      
+      <!-- Current Identity Banner -->
+      <div class="current-user-strip">
+        <div class="user-identity">
+          <div class="avatar-small" id="myAvatar">U</div>
+          <span>Logged in as: <strong id="myDisplayName">User</strong></span>
+        </div>
+        <button class="switch-user-btn" id="switchUserBtn">Switch User</button>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="tabs-bar">
+        <div class="tab-item active" data-tab="chats">
+          Chats <span class="tab-badge" id="totalUnreadBadge">0</span>
+        </div>
+        <div class="tab-item" data-tab="status">Status</div>
+        <div class="tab-item" data-tab="calls">Calls</div>
+      </div>
+      
+      <!-- Search Contacts -->
+      <div class="search-container">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          <input type="text" id="contactSearch" placeholder="Search or start new chat">
+        </div>
+      </div>
+      
+      <!-- Chat List Items -->
+      <div class="chat-list" id="chatList">
+        <!-- Rendered via JavaScript -->
+      </div>
+      
+      <!-- Floating Action Button: New Chat -->
+      <button class="fab-new-chat" id="fabNewChat" title="New Chat">
+        <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+      </button>
+
+    </div>
+
+    <!-- MAIN CHAT CONVERSATION WINDOW -->
+    <main class="chat-window" id="chatWindow">
+      
+      <!-- Empty State / Welcome Screen -->
+      <div class="welcome-screen" id="welcomeScreen">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12c0 1.82.49 3.53 1.34 5L2 22l5.23-1.31C8.65 21.53 10.28 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/>
+        </svg>
+        <h2>WhatsApp Web & Mobile</h2>
+        <p>Send and receive messages without keeping your phone online. Scan the QR code to install this app on your phone and your friend's phone.</p>
+        <div class="welcome-buttons">
+          <button class="primary-btn" id="welcomeQrBtn">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zm-5 0h3v2h-3v-2zm2 2h3v3h-3v-3zm3 3h3v3h-3v-3zm-5 0h2v3h-2v-3zm5-5h2v2h-2v-2z"/></svg>
+            Download / Connect Phones
+          </button>
+          <button class="secondary-btn" id="welcomeNewChatBtn">Start a Chat</button>
+        </div>
+      </div>
+
+      <!-- Active Chat Interface -->
+      <div id="activeChatContainer" style="display: none; height: 100%; flex-direction: column;">
+        
+        <!-- Chat Header -->
+        <div class="chat-header">
+          <div class="chat-header-left" id="chatHeaderInfo">
+            <button class="icon-btn back-btn" id="backToChatsBtn" title="Back">
+              <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            </button>
+            <div class="avatar-container">
+              <div class="avatar-circle" id="activeContactAvatar" style="width: 40px; height: 40px; font-size: 16px;">F</div>
+            </div>
+            <div class="header-user-info">
+              <div class="header-user-name" id="activeContactName">Friend</div>
+              <div class="header-user-status" id="activeContactStatus">online</div>
+            </div>
+          </div>
+          
+          <div class="chat-header-actions">
+            <!-- Video Call -->
+            <button class="icon-btn" id="videoCallBtn" title="Video call">
+              <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+            </button>
+            <!-- Voice Call -->
+            <button class="icon-btn" id="voiceCallBtn" title="Voice call">
+              <svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.45-5.15-3.76-6.59-6.59l1.97-1.57c.28-.28.36-.67.25-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
+            </button>
+            <!-- Options -->
+            <button class="icon-btn" id="chatMoreBtn" title="Options">
+              <svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Messages Feed -->
+        <div class="messages-container" id="messagesContainer">
+          <div class="encryption-notice">
+            🔒 Messages and calls are end-to-end encrypted. No one outside of this chat, not even WhatsApp, can read or listen to them.
+          </div>
+          <div class="date-badge">TODAY</div>
+          <!-- Messages will be injected here -->
+        </div>
+
+        <!-- Chat Bottom Input Bar -->
+        <div class="chat-input-bar">
+          
+          <!-- Emoji Picker Modal Sheet -->
+          <div class="emoji-picker-modal" id="emojiPicker">
+            <button class="emoji-btn">😀</button><button class="emoji-btn">😂</button>
+            <button class="emoji-btn">😍</button><button class="emoji-btn">🔥</button>
+            <button class="emoji-btn">👍</button><button class="emoji-btn">🎉</button>
+            <button class="emoji-btn">❤️</button><button class="emoji-btn">😎</button>
+            <button class="emoji-btn">🙌</button><button class="emoji-btn">✨</button>
+            <button class="emoji-btn">💯</button><button class="emoji-btn">🙏</button>
+            <button class="emoji-btn">👏</button><button class="emoji-btn">🤩</button>
+            <button class="emoji-btn">🥳</button><button class="emoji-btn">👀</button>
+          </div>
+
+          <div class="input-pill">
+            <!-- Emoji Button -->
+            <button class="icon-btn" id="emojiBtn" title="Emoji">
+              <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>
+            </button>
+            
+            <!-- Attachment Button -->
+            <button class="icon-btn" id="attachBtn" title="Attach Image">
+              <svg viewBox="0 0 24 24"><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/></svg>
+            </button>
+            <input type="file" id="mediaFileInput" accept="image/*" style="display: none;">
+            
+            <!-- Message Input Area -->
+            <textarea id="messageInput" rows="1" placeholder="Message"></textarea>
+          </div>
+
+          <!-- Dynamic Action Button: Mic or Send -->
+          <button class="action-circle-btn" id="actionBtn" title="Voice Message">
+            <!-- Mic Icon (default) -->
+            <svg id="micIcon" viewBox="0 0 24 24">
+              <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+            </svg>
+            <!-- Send Plane Icon (when typing) -->
+            <svg id="sendIcon" viewBox="0 0 24 24" style="display: none;">
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+            </svg>
+          </button>
+
+          <!-- Voice Recording Bar Overlay -->
+          <div class="recording-bar-overlay" id="recordingOverlay">
+            <div class="recording-status">
+              <div class="red-record-dot"></div>
+              <span class="record-timer" id="recordingTimer">00:00</span>
+              <span style="font-size: 13px; color: var(--wa-text-secondary); margin-left: 8px;">Recording voice note...</span>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <button class="record-cancel-btn" id="cancelRecordBtn">Cancel</button>
+              <button class="action-circle-btn" id="finishRecordBtn" style="width: 38px; height: 38px;" title="Send Voice Note">
+                <svg viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- QR CODE & DOWNLOAD MODAL -->
+  <div class="modal-backdrop" id="qrModal">
+    <div class="modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3>Install on Your & Friend's Phone</h3>
+        <button class="icon-btn" id="closeQrModalBtn" style="color: var(--wa-text-secondary);">&times;</button>
+      </div>
+      
+      <p>Scan with your Android camera or open this address in Chrome on your phone:</p>
+      
+      <div class="qr-code-box">
+        <img id="qrCodeImage" src="/api/qr" alt="Scan to install on phone">
+      </div>
+      
+      <div class="url-copy-box">
+        <span id="appNetworkUrl">Loading network address...</span>
+        <button class="switch-user-btn" id="copyUrlBtn">Copy Link</button>
+      </div>
+
+      <div style="background: rgba(0, 168, 132, 0.1); border-left: 3px solid var(--wa-accent); padding: 10px 14px; border-radius: 6px; font-size: 13px; line-height: 1.45;">
+        <strong>How to install on Android:</strong><br>
+        1. Open the link above in Chrome on Android.<br>
+        2. Tap the Chrome 3 dots (⋮) menu at top right.<br>
+        3. Tap <strong>"Install app"</strong> or <strong>"Add to Home screen"</strong>.<br>
+        4. It installs as a real app icon on your home screen!
+      </div>
+      
+      <div class="modal-actions">
+        <button class="primary-btn" id="doneQrModalBtn">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SWITCH / CREATE USER PROFILE MODAL -->
+  <div class="modal-backdrop" id="userProfileModal">
+    <div class="modal-card">
+      <h3>Your WhatsApp Profile</h3>
+      <p>Choose your username so your friend can see who is messaging:</p>
+      <input type="text" class="modal-input" id="profileNameInput" placeholder="Enter your name (e.g. You, Alex)">
+      
+      <p style="font-size: 13px; color: var(--wa-text-secondary); margin-top: 4px;">
+        Quick profiles:
+      </p>
+      <div style="display: flex; gap: 8px;">
+        <button class="switch-user-btn" onclick="selectQuickUser('Me')">Me</button>
+        <button class="switch-user-btn" onclick="selectQuickUser('Friend')">Friend</button>
+        <button class="switch-user-btn" onclick="selectQuickUser('Alex')">Alex</button>
+        <button class="switch-user-btn" onclick="selectQuickUser('Sam')">Sam</button>
+      </div>
+      
+      <div class="modal-actions">
+        <button class="primary-btn" id="saveProfileBtn">Save & Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALLING MODAL -->
+  <div class="modal-backdrop" id="callModal">
+    <div class="modal-card call-modal">
+      <div class="call-avatar-big" id="callContactAvatar">F</div>
+      <h3 style="margin-top: 14px;" id="callContactName">Friend</h3>
+      <div class="call-status-text" id="callStatusText">WhatsApp calling...</div>
+      
+      <button class="end-call-btn" id="endCallBtn" title="End Call">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1c0 .39-.23.74-.58.9-.96.44-1.84.99-2.65 1.63-.3.24-.71.26-1.04.06l-2.45-1.5c-.34-.21-.49-.62-.36-.99C2.08 7.37 6.64 4 12 4s9.92 3.37 11.68 7.92c.13.37-.02.78-.36.99l-2.45 1.5c-.33.2-.74.18-1.04-.06-.81-.64-1.69-1.19-2.65-1.63-.35-.16-.58-.51-.58-.9V9.72C15.15 9.25 13.6 9 12 9z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- PWA INSTALL BANNER -->
+  <div class="install-pwa-banner" id="pwaInstallBanner">
+    <div class="install-info">
+      <img src="/static/icons/icon-192.png" alt="WhatsApp">
+      <div>
+        <strong>WhatsApp</strong>
+        <div style="font-size: 12px; opacity: 0.9;">Add to Home Screen for instant access</div>
+      </div>
+    </div>
+    <div class="install-actions">
+      <button class="install-btn" id="installPwaBtn">Install</button>
+      <button class="dismiss-btn" id="dismissPwaBtn">&times;</button>
+    </div>
+  </div>
+
+  <!-- Load JavaScript -->
+  <script src="/static/sounds.js"></script>
+  <script src="/static/app.js"></script>
+
+</body>
+</html>
