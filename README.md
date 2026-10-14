@@ -1,5 +1,7 @@
 # 📱 WhatsApp Clone (Web & Mobile Installable PWA)
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/luckygohel-18/whatsapp-chat-app)
+
 A fully functional real-time WhatsApp clone styled identically to WhatsApp (Dark & Light modes, real-time messaging via WebSockets, delivery ticks, typing indicators, photo sharing, voice notes, audio effects, and phone install support).
 
 ---
